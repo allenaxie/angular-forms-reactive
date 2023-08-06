@@ -1,0 +1,45 @@
+<h2>Project Form</h2>
+<form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <button type="button" class="btn btn-primary" (click)="onTestAccount()">
+      Test account
+    </button>
+    <button type="button" class="btn btn-warning" (click)="onReset()">
+      Reset
+    </button>
+  </div>
+  <div class="form-group">
+    <label for="name">Project Name</label>
+    <input type="text" id="name" formControlName="name" />
+    <div
+      *ngIf="!projectForm.get('name').valid && projectForm.get('name').touched"
+    >
+      <p *ngIf="projectForm.get('name').errors?.['nameIsBanned']">
+        This name is banned.
+      </p>
+      <p *ngIf="projectForm.get('name').errors?.['required']">
+        Name is required.
+      </p>
+      <p *ngIf="projectForm.get('name').errors?.['duplicateNameInDatabase']">
+        Duplicate name. Please try another name.
+      </p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input
+      type="text"
+      id="email"
+      formControlName="email"
+      email
+      class="form-control"
+    />
+  </div>
+  <div class="form-group">
+    <label for="status">Status</label>
+    <select id="status" formControlName="status" class="form-control">
+      <option *ngFor="let s of projectStatusOptions">{{ s }}</option>
+    </select>
+  </div>
+  <button>Submit</button>
+</form>
